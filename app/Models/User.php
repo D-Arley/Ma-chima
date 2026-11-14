@@ -14,8 +14,20 @@ use Illuminate\Notifications\Notifiable;
 #[Hidden(['password', 'remember_token'])]
 class User extends Authenticatable
 {
+    public const ROLES = ['admin', 'vendedor', 'bodeguero'];
+
     /** @use HasFactory<UserFactory> */
     use HasFactory, Notifiable;
+
+    public function hasRole(string ...$roles): bool
+    {
+        return in_array($this->role, $roles, true);
+    }
+
+    public function isAdmin(): bool
+    {
+        return $this->hasRole('admin');
+    }
 
     /**
      * Get the attributes that should be cast.
