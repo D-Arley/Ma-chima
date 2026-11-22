@@ -94,6 +94,47 @@
             </div>
         </section>
 
+        <section class="mt-8 grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
+            @can('view-catalog')
+                <a href="{{ route('catalogo.index') }}" class="rounded-2xl border border-[#e7e0d2] bg-white p-5 transition hover:-translate-y-1 hover:shadow-lg">
+                    <p class="text-xs font-bold uppercase tracking-[0.16em] text-[#a47b31]">Catálogo</p>
+                    <p class="mt-3 font-serif text-xl">Ver productos</p>
+                </a>
+            @endcan
+            @can('count-inventory')
+                <a href="{{ route('logistica.index') }}" class="rounded-2xl border border-[#e7e0d2] bg-white p-5 transition hover:-translate-y-1 hover:shadow-lg">
+                    <p class="text-xs font-bold uppercase tracking-[0.16em] text-[#a47b31]">Logística</p>
+                    <p class="mt-3 font-serif text-xl">Entregas y conteos</p>
+                </a>
+            @endcan
+            @can('manage-inventory')
+                <a href="{{ route('inventario.index') }}" class="rounded-2xl border border-[#e7e0d2] bg-white p-5 transition hover:-translate-y-1 hover:shadow-lg">
+                    <p class="text-xs font-bold uppercase tracking-[0.16em] text-[#a47b31]">Bodega</p>
+                    <p class="mt-3 font-serif text-xl">Gestionar inventario</p>
+                </a>
+            @endcan
+            @can('open-pos')
+                <a href="{{ route('ventas.index') }}" class="rounded-2xl border border-[#e7e0d2] bg-white p-5 transition hover:-translate-y-1 hover:shadow-lg">
+                    <p class="text-xs font-bold uppercase tracking-[0.16em] text-[#a47b31]">Punto de venta</p>
+                    <p class="mt-3 font-serif text-xl">Registrar venta</p>
+                </a>
+                <a href="{{ route('caja.index') }}" class="rounded-2xl border border-[#e7e0d2] bg-white p-5 transition hover:-translate-y-1 hover:shadow-lg">
+                    <p class="text-xs font-bold uppercase tracking-[0.16em] text-[#a47b31]">Caja</p>
+                    <p class="mt-3 font-serif text-xl">Ver balance</p>
+                </a>
+            @endcan
+            @can('manage-users')
+                <a href="{{ route('admin.usuarios.index') }}" class="rounded-2xl border border-[#e7e0d2] bg-white p-5 transition hover:-translate-y-1 hover:shadow-lg">
+                    <p class="text-xs font-bold uppercase tracking-[0.16em] text-[#a47b31]">Administración</p>
+                    <p class="mt-3 font-serif text-xl">Gestionar usuarios</p>
+                </a>
+                <a href="{{ route('movimientos.index') }}" class="rounded-2xl border border-[#e7e0d2] bg-white p-5 transition hover:-translate-y-1 hover:shadow-lg">
+                    <p class="text-xs font-bold uppercase tracking-[0.16em] text-[#a47b31]">Auditoría</p>
+                    <p class="mt-3 font-serif text-xl">Ver movimientos</p>
+                </a>
+            @endcan
+        </section>
+
         <section class="mt-10 rounded-2xl border border-[#e7e0d2] bg-white p-6 sm:p-8">
             <div class="flex flex-col gap-2 sm:flex-row sm:items-end sm:justify-between">
                 <div>

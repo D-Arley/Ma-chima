@@ -43,4 +43,28 @@ class InitialUsersSeederTest extends TestCase
         $this->assertNotSame('password-admin', User::query()->where('role', 'admin')->value('password'));
         $this->assertNotNull(User::query()->where('role', 'admin')->value('email_verified_at'));
     }
+
+    public function test_it_updates_existing_demo_user_passwords_from_config(): void
+    {
+        $user = User::factory()->create([
+            'email' => 'admin@machima.test',
+            'role' => 'admin',
+            'password' => bcrypt('password-anterior'),
+        ]);
+
+        config()->set('machima.initial_users', [
+            [
+                'name' => 'Administrador',
+                'email' => 'admin@machima.test',
+                'role' => 'admin',
+                'password' => 'password-nueva-admin',
+            ],
+        ]);
+
+        $this->seed(InitialUsersSeeder::class);
+
+        $user->refresh();
+        $this->assertTrue(password_verify('password-nueva-admin', $user->password));
+        $this->assertFalse(password_verify('password-anterior', $user->password));
+    }
 }

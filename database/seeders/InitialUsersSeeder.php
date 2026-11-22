@@ -21,15 +21,11 @@ class InitialUsersSeeder extends Seeder
             }
 
             $user = User::firstOrNew(['email' => $account['email']]);
-            $isNewUser = ! $user->exists;
 
             $user->name = $account['name'];
             $user->role = $account['role'];
             $user->email_verified_at ??= now();
-
-            if ($isNewUser) {
-                $user->password = Hash::make($password);
-            }
+            $user->password = Hash::make($password);
 
             $user->save();
         }

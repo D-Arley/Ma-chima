@@ -30,5 +30,10 @@ class AppServiceProvider extends ServiceProvider
         Gate::define('manage-inventory', fn (User $user) => $user->hasRole('bodeguero'));
         Gate::define('rename-products', fn (User $user) => $user->hasRole('bodeguero'));
         Gate::define('deliver-stock', fn (User $user) => $user->hasRole('bodeguero'));
+        Gate::define('manage-users', fn (User $user) => $user->isAdmin());
+        Gate::define('view-catalog', fn (User $user) => $user->hasRole('admin', 'vendedor', 'bodeguero'));
+        Gate::define('open-pos', fn (User $user) => $user->hasRole('vendedor'));
+        Gate::define('manage-cash', fn (User $user) => $user->hasRole('vendedor'));
+        Gate::define('view-movement-history', fn (User $user) => $user->isAdmin());
     }
 }

@@ -1,13 +1,39 @@
 <nav x-data="{ open: false }" class="sticky top-0 z-30 border-b border-white/10 bg-[#0c0b0a] text-white shadow-lg shadow-black/5">
+    @php
+        $activeLinkClasses = 'border-[#d2aa5c] text-[#e4c577]';
+        $inactiveLinkClasses = 'border-transparent text-white/70 hover:text-[#e4c577]';
+        $mobileActiveLinkClasses = 'bg-white/10 text-[#e4c577]';
+        $mobileInactiveLinkClasses = 'text-white/80 hover:bg-white/5';
+    @endphp
+
     <div class="mx-auto flex h-[4.5rem] max-w-7xl items-center justify-between px-5 sm:px-8">
         <div class="flex items-center gap-8">
             <a href="{{ route('dashboard') }}" class="flex items-center gap-3">
                 <x-application-logo class="h-11 w-11 rounded-full" />
                 <span class="hidden text-sm font-bold tracking-[0.18em] sm:block">MA'CHIMA</span>
             </a>
-            <a href="{{ route('dashboard') }}" class="hidden border-b-2 border-[#d2aa5c] py-6 text-sm font-medium text-[#e4c577] sm:block">
+            <a href="{{ route('dashboard') }}" @class(['hidden border-b-2 py-6 text-sm font-medium sm:block', $activeLinkClasses => request()->routeIs('dashboard'), $inactiveLinkClasses => ! request()->routeIs('dashboard')])>
                 Panel de trabajo
             </a>
+            <div class="hidden items-center gap-5 lg:flex">
+                @can('view-catalog')
+                    <a href="{{ route('catalogo.index') }}" @class(['border-b-2 py-6 text-sm', $activeLinkClasses => request()->routeIs('catalogo.*'), $inactiveLinkClasses => ! request()->routeIs('catalogo.*')])>Catálogo</a>
+                @endcan
+                @can('count-inventory')
+                    <a href="{{ route('logistica.index') }}" @class(['border-b-2 py-6 text-sm', $activeLinkClasses => request()->routeIs('logistica.*'), $inactiveLinkClasses => ! request()->routeIs('logistica.*')])>Logística</a>
+                @endcan
+                @can('manage-inventory')
+                    <a href="{{ route('inventario.index') }}" @class(['border-b-2 py-6 text-sm', $activeLinkClasses => request()->routeIs('inventario.*'), $inactiveLinkClasses => ! request()->routeIs('inventario.*')])>Inventario</a>
+                @endcan
+                @can('open-pos')
+                    <a href="{{ route('ventas.index') }}" @class(['border-b-2 py-6 text-sm', $activeLinkClasses => request()->routeIs('ventas.*'), $inactiveLinkClasses => ! request()->routeIs('ventas.*')])>Ventas</a>
+                    <a href="{{ route('caja.index') }}" @class(['border-b-2 py-6 text-sm', $activeLinkClasses => request()->routeIs('caja.*'), $inactiveLinkClasses => ! request()->routeIs('caja.*')])>Caja</a>
+                @endcan
+                @can('manage-users')
+                    <a href="{{ route('admin.usuarios.index') }}" @class(['border-b-2 py-6 text-sm', $activeLinkClasses => request()->routeIs('admin.usuarios.*'), $inactiveLinkClasses => ! request()->routeIs('admin.usuarios.*')])>Usuarios</a>
+                    <a href="{{ route('movimientos.index') }}" @class(['border-b-2 py-6 text-sm', $activeLinkClasses => request()->routeIs('movimientos.*'), $inactiveLinkClasses => ! request()->routeIs('movimientos.*')])>Movimientos</a>
+                @endcan
+            </div>
         </div>
 
         <div class="hidden items-center gap-4 sm:flex">
@@ -63,8 +89,25 @@
             </p>
         </div>
         <div class="space-y-1">
-            <a href="{{ route('dashboard') }}" class="block rounded-lg px-3 py-2.5 text-sm text-white/80 hover:bg-white/5">Panel de trabajo</a>
-            <a href="{{ route('profile.edit') }}" class="block rounded-lg px-3 py-2.5 text-sm text-white/80 hover:bg-white/5">Mi perfil</a>
+            <a href="{{ route('dashboard') }}" @class(['block rounded-lg px-3 py-2.5 text-sm', $mobileActiveLinkClasses => request()->routeIs('dashboard'), $mobileInactiveLinkClasses => ! request()->routeIs('dashboard')])>Panel de trabajo</a>
+            <a href="{{ route('profile.edit') }}" @class(['block rounded-lg px-3 py-2.5 text-sm', $mobileActiveLinkClasses => request()->routeIs('profile.*'), $mobileInactiveLinkClasses => ! request()->routeIs('profile.*')])>Mi perfil</a>
+            @can('view-catalog')
+                <a href="{{ route('catalogo.index') }}" @class(['block rounded-lg px-3 py-2.5 text-sm', $mobileActiveLinkClasses => request()->routeIs('catalogo.*'), $mobileInactiveLinkClasses => ! request()->routeIs('catalogo.*')])>Catálogo</a>
+            @endcan
+            @can('count-inventory')
+                <a href="{{ route('logistica.index') }}" @class(['block rounded-lg px-3 py-2.5 text-sm', $mobileActiveLinkClasses => request()->routeIs('logistica.*'), $mobileInactiveLinkClasses => ! request()->routeIs('logistica.*')])>Logística</a>
+            @endcan
+            @can('manage-inventory')
+                <a href="{{ route('inventario.index') }}" @class(['block rounded-lg px-3 py-2.5 text-sm', $mobileActiveLinkClasses => request()->routeIs('inventario.*'), $mobileInactiveLinkClasses => ! request()->routeIs('inventario.*')])>Inventario</a>
+            @endcan
+            @can('open-pos')
+                <a href="{{ route('ventas.index') }}" @class(['block rounded-lg px-3 py-2.5 text-sm', $mobileActiveLinkClasses => request()->routeIs('ventas.*'), $mobileInactiveLinkClasses => ! request()->routeIs('ventas.*')])>Ventas</a>
+                <a href="{{ route('caja.index') }}" @class(['block rounded-lg px-3 py-2.5 text-sm', $mobileActiveLinkClasses => request()->routeIs('caja.*'), $mobileInactiveLinkClasses => ! request()->routeIs('caja.*')])>Caja</a>
+            @endcan
+            @can('manage-users')
+                <a href="{{ route('admin.usuarios.index') }}" @class(['block rounded-lg px-3 py-2.5 text-sm', $mobileActiveLinkClasses => request()->routeIs('admin.usuarios.*'), $mobileInactiveLinkClasses => ! request()->routeIs('admin.usuarios.*')])>Usuarios</a>
+                <a href="{{ route('movimientos.index') }}" @class(['block rounded-lg px-3 py-2.5 text-sm', $mobileActiveLinkClasses => request()->routeIs('movimientos.*'), $mobileInactiveLinkClasses => ! request()->routeIs('movimientos.*')])>Movimientos</a>
+            @endcan
             <form method="POST" action="{{ route('logout') }}">
                 @csrf
                 <button type="submit" class="block w-full rounded-lg px-3 py-2.5 text-left text-sm text-white/80 hover:bg-white/5">Cerrar sesión</button>
